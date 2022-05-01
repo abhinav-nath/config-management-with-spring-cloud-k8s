@@ -4,15 +4,9 @@ plugins {
   id 'java'
 }
 
-group = 'com.codecafe'
-version = '0.0.1-SNAPSHOT'
+group = 'com.codecafe.springcloudk8s'
+version = '1.0.0'
 sourceCompatibility = JavaVersion.VERSION_11
-
-configurations {
-  compileOnly {
-    extendsFrom annotationProcessor
-  }
-}
 
 repositories {
   mavenCentral()
@@ -20,12 +14,8 @@ repositories {
 
 dependencies {
   implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
-  implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+  implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
   implementation "org.springframework.cloud:spring-cloud-starter-kubernetes-client-config:${springCloudK8sVersion}"
-  implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
-  implementation "org.apache.logging.log4j:log4j-to-slf4j:${log4jVersion}"
-  compileOnly "org.projectlombok:lombok:${lombokVersion}"
-  annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
   testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 }
 

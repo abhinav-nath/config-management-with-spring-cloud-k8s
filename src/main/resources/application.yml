@@ -1,0 +1,13 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: config-management-with-spring-cloud-k8s
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+
+app:
+  message: local

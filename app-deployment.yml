@@ -1,0 +1,77 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: namespace-reader
+rules:
+  - apiGroups: [ "" ]
+    resources: [ "configmaps", "pods", "services", "endpoints", "secrets" ]
+    verbs: [ "get", "list", "watch" ]
+---
+
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: namespace-reader-binding
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: default
+    apiGroup: ""
+roleRef:
+  kind: Role
+  name: namespace-reader
+  apiGroup: ""
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-management-with-spring-cloud-k8s
+data:
+  application.yml: |-
+    app:
+      message: k8s config map
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: config-management-with-spring-cloud-k8s-dep
+  name: config-management-with-spring-cloud-k8s-dep
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-management-with-spring-cloud-k8s-dep
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: config-management-with-spring-cloud-k8s-dep
+    spec:
+      containers:
+        - image: config-management-with-spring-cloud-k8s:latest
+          imagePullPolicy: Never
+          name: config-management-with-spring-cloud-k8s
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: { }
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: config-management-with-spring-cloud-k8s-svc
+spec:
+  ports:
+    - name: http
+      port: 8091
+      targetPort: 8091
+      protocol: TCP
+  selector:
+    app: config-management-with-spring-cloud-k8s-dep
+  type: LoadBalancer
