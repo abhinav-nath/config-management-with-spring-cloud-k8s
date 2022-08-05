@@ -1,8 +1,6 @@
-# config-management-with-spring-cloud-k8s
+# Config management with Spring Cloud Kubernetes
 
-Config management with Spring Cloud Kubernetes
-
-### How to run
+## Steps to run
 
 1. Start Colima with Kubernetes
 
