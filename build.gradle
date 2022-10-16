@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.codecafe.springcloudk8s'
 version = '1.0.0'
-sourceCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
   mavenCentral()
